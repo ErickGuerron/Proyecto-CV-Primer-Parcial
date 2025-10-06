@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/interfaces/Conexion.java</file>
+            <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/interfaces/FormLogin.java</file>
             <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/interfaces/Alumnos.java</file>
             <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/interfaces/Principal.java</file>
-            <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/cuartouta/CuartoUta.java</file>
+            <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/cuartouta/CLogin.java</file>
+            <file>file:/C:/Users/Erick%20Guerron/Documents/NetBeansProjects/CuartoUta/src/cuartouta/Conexion.java</file>
         </group>
     </open-files>
 </project-private>
