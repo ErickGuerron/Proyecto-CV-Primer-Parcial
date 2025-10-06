@@ -36,6 +36,8 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jdskPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jdskPrincipalLayout = new javax.swing.GroupLayout(jdskPrincipal);
         jdskPrincipal.setLayout(jdskPrincipalLayout);
         jdskPrincipalLayout.setHorizontalGroup(
