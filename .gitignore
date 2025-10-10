@@ -28,6 +28,8 @@ replay_pid*
 # ==========================
 
 # === NetBeans ===
+nbproject/build-impl.xml
+nbproject/genfiles.properties
 nbproject/private/
 build/
 nbbuild/
