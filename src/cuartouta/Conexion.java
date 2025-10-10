@@ -1,7 +1,5 @@
 package cuartouta;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.*;
 import javax.swing.JOptionPane;
 

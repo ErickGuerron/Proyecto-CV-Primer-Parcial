@@ -1,16 +1,9 @@
-# Compiled class file
+# ==========================
+# ARCHIVOS GENERALES DE JAVA
+# ==========================
+
+# Archivos compilados
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -19,6 +12,94 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Logs y dumps
+*.log
 hs_err_pid*
 replay_pid*
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# ==========================
+# IDEs COMUNES
+# ==========================
+
+# === NetBeans ===
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+out/
+
+# === Eclipse ===
+.project
+.classpath
+.settings/
+bin/
+
+# === VS Code ===
+.vscode/
+
+# ==========================
+# GESTORES DE DEPENDENCIAS
+# ==========================
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ==========================
+# ENTORNOS / HERRAMIENTAS
+# ==========================
+
+# BlueJ
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Jupyter / notebooks Java (BeakerX)
+.ipynb_checkpoints/
+
+# ==========================
+# SISTEMAS OPERATIVOS
+# ==========================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ==========================
+# TUS CARPETAS ESPECÍFICAS
+# ==========================
+/CuartoUta/build/
+/CuartoUta/nbproject/private/
+/CuartoUta-Clases/build/
+/CuartoUta-Clases/nbproject/private/
