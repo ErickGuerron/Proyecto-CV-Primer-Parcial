@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 
 public class UTCTelefono extends JTextField {
 
-    public UTCTelefono() {
+   public UTCTelefono() {
         configurarValidacion();
     }
 
@@ -21,10 +21,25 @@ public class UTCTelefono extends JTextField {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
+                String texto = getText();
 
-                if (!Character.isDigit(c) || getText().length() >= 10) {
+                if (!Character.isDigit(c)){ 
                     e.consume();
                 }
+                
+                if(texto.length()>=10){
+                    e.consume();
+                    return;
+                }
+                
+                if(texto.length() == 0 && c!='0'){
+                    e.consume();
+                    return;
+                }
+                
+                if(texto.length() == 1 && c!= '9'){
+                e.consume();
+                return;}
             }
 
             @Override
@@ -69,12 +84,6 @@ public class UTCTelefono extends JTextField {
         setBorder(new LineBorder(Color.RED));
     }
     
-    public Long getTextAsNumber() {
-        if (getText() == null || getText().isEmpty()) {
-            return 0L;
-        }
-        return Long.valueOf(getText());
-    }
 
     public void setTextAsNumber(Long valor) {
         setText(String.valueOf(valor));
