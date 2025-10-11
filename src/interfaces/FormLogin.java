@@ -250,8 +250,7 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void jbntIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbntIngresarMouseClicked
         cuartouta.CLogin log = new cuartouta.CLogin();
-        log.validarUsuario(jtxtUsuario, jptxtPassword);
-        this.setVisible(false);
+        log.validarUsuario(jtxtUsuario, jptxtPassword, this); 
     }//GEN-LAST:event_jbntIngresarMouseClicked
 
     private void jpnlExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnlExitMouseClicked
