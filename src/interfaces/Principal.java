@@ -4,6 +4,8 @@
  */
 package interfaces;
 
+import javax.swing.Box;
+
 /**
  *
  * @author ErickGuerron
@@ -16,7 +18,38 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
+        BoxHorizontalGlue();
+        setStyles();
     }
+
+    public void BoxHorizontalGlue() {
+        jbmBarraSuperior.remove(jmCuenta);
+        jbmBarraSuperior.add(Box.createHorizontalGlue());
+        jbmBarraSuperior.add(jmCuenta);
+
+    }
+    
+        public void setStyles() {
+        
+        jdskPrincipal.setImagenFondo("/img/back.png");
+
+        jbmBarraSuperior.setPreferredSize(new java.awt.Dimension(213, 40));
+        jmAdministracion.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jmiEstudiantes.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiCursos.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmReportes.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jmiMEstudiantes.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiMCursos.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiRInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jmiSalir.setFont(new java.awt.Font("Segoe UI", 0, 14));
+
+    }
+
+    
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,77 +60,143 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jdskPrincipal = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        jdskPrincipal = new componentes.JDKFondo();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jbmBarraSuperior = new javax.swing.JMenuBar();
+        jmAdministracion = new javax.swing.JMenu();
+        jmiEstudiantes = new javax.swing.JMenuItem();
+        jmiCursos = new javax.swing.JMenuItem();
+        jmiInscripciones = new javax.swing.JMenuItem();
+        jmReportes = new javax.swing.JMenu();
+        jmiMEstudiantes = new javax.swing.JMenuItem();
+        jmiMCursos = new javax.swing.JMenuItem();
+        jmiRInscripciones = new javax.swing.JMenuItem();
+        jmCuenta = new javax.swing.JMenu();
+        jmiSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jdskPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gorro.png"))); // NOI18N
+        jdskPrincipal.add(jButton1);
+        jButton1.setBounds(0, 0, 40, 40);
 
-        javax.swing.GroupLayout jdskPrincipalLayout = new javax.swing.GroupLayout(jdskPrincipal);
-        jdskPrincipal.setLayout(jdskPrincipalLayout);
-        jdskPrincipalLayout.setHorizontalGroup(
-            jdskPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jdskPrincipalLayout.setVerticalGroup(
-            jdskPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
-        );
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/libro-cubierta-abierta.png"))); // NOI18N
+        jdskPrincipal.add(jButton2);
+        jButton2.setBounds(40, 0, 40, 40);
 
-        jMenu1.setText("Ventanas");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
+        jdskPrincipal.add(jButton3);
+        jButton3.setBounds(80, 0, 40, 40);
+
+        jbmBarraSuperior.setMinimumSize(new java.awt.Dimension(213, 500));
+
+        jmAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/encuesta-cuadrada-vertical.png"))); // NOI18N
+        jmAdministracion.setText("Administracion");
+        jmAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                jmAdministracionActionPerformed(evt);
             }
         });
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("Estudiantes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmiEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiEstudiantes.setText("Gestionar Estudiantes");
+        jmiEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmiEstudiantesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jmAdministracion.add(jmiEstudiantes);
 
-        jMenuBar1.add(jMenu1);
+        jmiCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiCursos.setText("Gestionar Cursos");
+        jmAdministracion.add(jmiCursos);
 
-        jMenu2.setText("Reportes");
-        jMenuBar1.add(jMenu2);
+        jmiInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiInscripciones.setText("Inscripciones");
+        jmAdministracion.add(jmiInscripciones);
 
-        jMenu3.setText("Salir");
-        jMenuBar1.add(jMenu3);
+        jbmBarraSuperior.add(jmAdministracion);
 
-        setJMenuBar(jMenuBar1);
+        jmReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/prueba.png"))); // NOI18N
+        jmReportes.setText("Reportes");
+
+        jmiMEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiMEstudiantes.setText("Estudiantes");
+        jmReportes.add(jmiMEstudiantes);
+
+        jmiMCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiMCursos.setText("Cursos");
+        jmiMCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMCursosActionPerformed(evt);
+            }
+        });
+        jmReportes.add(jmiMCursos);
+
+        jmiRInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiRInscripciones.setText("Reporte Inscripciones");
+        jmiRInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRInscripcionesActionPerformed(evt);
+            }
+        });
+        jmReportes.add(jmiRInscripciones);
+
+        jbmBarraSuperior.add(jmReportes);
+
+        jmCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario-de-pizarra.png"))); // NOI18N
+        jmCuenta.setText("Cuenta");
+
+        jmiSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiSalir.setText("Salir");
+        jmiSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSalirActionPerformed(evt);
+            }
+        });
+        jmCuenta.add(jmiSalir);
+
+        jbmBarraSuperior.add(jmCuenta);
+
+        setJMenuBar(jbmBarraSuperior);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdskPrincipal)
+            .addComponent(jdskPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdskPrincipal)
+            .addComponent(jdskPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Alumnos a= new Alumnos();
+    private void jmiEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEstudiantesActionPerformed
+        Alumnos a = new Alumnos();
         jdskPrincipal.add(a);
         a.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiEstudiantesActionPerformed
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void jmAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAdministracionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }//GEN-LAST:event_jmAdministracionActionPerformed
+
+    private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiMCursosActionPerformed
+
+    private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiRInscripcionesActionPerformed
+
+    private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,11 +234,20 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JDesktopPane jdskPrincipal;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JMenuBar jbmBarraSuperior;
+    private componentes.JDKFondo jdskPrincipal;
+    private javax.swing.JMenu jmAdministracion;
+    private javax.swing.JMenu jmCuenta;
+    private javax.swing.JMenu jmReportes;
+    private javax.swing.JMenuItem jmiCursos;
+    private javax.swing.JMenuItem jmiEstudiantes;
+    private javax.swing.JMenuItem jmiInscripciones;
+    private javax.swing.JMenuItem jmiMCursos;
+    private javax.swing.JMenuItem jmiMEstudiantes;
+    private javax.swing.JMenuItem jmiRInscripciones;
+    private javax.swing.JMenuItem jmiSalir;
     // End of variables declaration//GEN-END:variables
 }
