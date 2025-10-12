@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ErickGuerron
  */
-public class Alumnos extends javax.swing.JInternalFrame {
+public class Cursos extends javax.swing.JInternalFrame {
 
     Conexion cn = new Conexion();
     java.sql.Connection cc = cn.conectar();
@@ -23,38 +23,53 @@ public class Alumnos extends javax.swing.JInternalFrame {
     /**
      * Creates new form Alumnos
      */
-    public Alumnos() {
+    public Cursos() {
         initComponents();
-        mostrarEstudiantes();
+        mostrar();
         cargarCampos();
         botonesInicio();
         textosInicio();
     }
 
+    public String generarSiguienteId() {
+        if (cc == null) {
+            System.err.println("Error: La conexión a la base de datos (cc) es nula.");
+            return null;
+        }
+
+        String siguienteId = null;
+
+        String sql = "SELECT MAX(CAST(id_cur AS UNSIGNED)) FROM cursos";
+
+        try (Statement stmt = cc.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            int siguienteNumero = 1; 
+            if (rs.next()) {
+                int maxId = rs.getInt(1); 
+                siguienteNumero = maxId + 1;
+            }
+            siguienteId = String.valueOf(siguienteNumero);
+
+        } catch (SQLException e) {
+            System.err.println("Error al generar el siguiente ID de curso: " + e.getMessage());
+        }
+        return siguienteId;
+    }
+
     public void guardar() {
 
         try {
-            if (jtxtCedula.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio la cedula");
-                jtxtCedula.requestFocus();
-            } else if (jtxtNombre.getText().trim().isEmpty()) {
+            if (jtxtNombre.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Es obligatorio el nombre");
                 jtxtNombre.requestFocus();
-            } else if (jtxtApellido.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio el apellido");
-                jtxtApellido.requestFocus();
             } else {
-                String SqlInsert = "insert into estudiantes values(?,?,?,?,?)";
+                String SqlInsert = "INSERT INTO cursos (id_cur, nom_cur) VALUES (?, ?)";
                 PreparedStatement psd = cc.prepareStatement(SqlInsert);
-                psd.setString(1, jtxtCedula.getText());
+                psd.setString(1, generarSiguienteId());
                 psd.setString(2, jtxtNombre.getText());
-                psd.setString(3, jtxtApellido.getText());
-                psd.setString(4, jtxtDireccion.getText().trim().isEmpty() ? "S/N" : jtxtDireccion.getText());
-                psd.setString(5, jtxtTelefono.getText().trim().isEmpty() ? "0000000000" : jtxtTelefono.getText());
                 int n = psd.executeUpdate();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se Guardo Correctamente");
-                    mostrarEstudiantes();
+                    mostrar();
                     botonesInicio();
                     textosInicio();
                 }
@@ -64,19 +79,21 @@ public class Alumnos extends javax.swing.JInternalFrame {
         }
     }
 
-    public void eliminarEstudiante() {
+    public void eliminar() {
         try {
             if ((JOptionPane.showConfirmDialog(null,
-                    "Desea eliminar al estudiante con cedula: '" + jtxtCedula.getText() + "'",
-                    "Borrar Estudiante",
+                    "Desea eliminar el curso con nombre: '" + jtxtNombre.getText() + "'",
+                    "Borrar Curso",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 
-                String SqlDelete = "delete from estudiantes where id_est='" + jtxtCedula.getText() + "'";
+                String id=(String) jtblCursos.getValueAt(jtblCursos.getSelectedRow(), 0);
+                System.out.println(id);
+                String SqlDelete = "delete from cursos where id_cur='" +id+ "'";
                 PreparedStatement psd = cc.prepareStatement(SqlDelete);
                 int n = psd.executeUpdate();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se elimino correctamente");
-                    mostrarEstudiantes();
+                    mostrar();
                 }
             }
         } catch (Exception ex) {
@@ -84,39 +101,47 @@ public class Alumnos extends javax.swing.JInternalFrame {
         }
     }
 
-    public void editarEstudiante() {
-        try {
-            String SqlUpdate = "update estudiantes set nom_est='" + jtxtNombre.getText()
-                    + "',ape_est='" + jtxtApellido.getText() + "',"
-                    + "dir_est='" + jtxtDireccion.getText() + "',"
-                    + "tel_est='" + jtxtTelefono.getText() + "'"
-                    + " where id_est='" + jtxtCedula.getText() + "'";
-            PreparedStatement psd;
-            psd = cc.prepareStatement(SqlUpdate);
-            int n = psd.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
-                mostrarEstudiantes();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+    public void editar() {
+    try {
+        int filaSeleccionada = jtblCursos.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un curso para editar.", "Sin Selección", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        String nuevoNombre = jtxtNombre.getText().trim();
+        if (nuevoNombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre del curso no puede estar vacío.", "Validación", JOptionPane.WARNING_MESSAGE);
+            jtxtNombre.requestFocus();
+            return;
+        }
+        String id = jtblCursos.getValueAt(filaSeleccionada, 0).toString();
+        String SqlUpdate = "UPDATE cursos SET nom_cur = ? WHERE id_cur = ?";
+        PreparedStatement psd = cc.prepareStatement(SqlUpdate);
+        psd.setString(1, nuevoNombre); 
+        psd.setString(2, id);          
+        
+        int n = psd.executeUpdate();
+        
+        if (n > 0) {
+            JOptionPane.showMessageDialog(null, "Se actualizó correctamente");
+            mostrar(); 
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el curso para actualizar (ID: " + id + ").", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+
+    } catch (SQLException ex){
+        JOptionPane.showMessageDialog(null, "Error al actualizar el curso:\n" + ex.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
     }
+}
 
     public void cargarCampos() {
-        jtblAlumnos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (jtblAlumnos.getSelectedRow() != -1) {
-                    selectBotsEst();
-                    textosNuevo();
-                    int fila = jtblAlumnos.getSelectedRow();
-                    jtxtCedula.setText(jtblAlumnos.getValueAt(fila, 0).toString());
-                    jtxtNombre.setText(jtblAlumnos.getValueAt(fila, 1).toString());
-                    jtxtApellido.setText(jtblAlumnos.getValueAt(fila, 2).toString());
-                    jtxtDireccion.setText(jtblAlumnos.getValueAt(fila, 3).toString());
-                    jtxtTelefono.setText(jtblAlumnos.getValueAt(fila, 4).toString());
-                }
+        jtblCursos.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (jtblCursos.getSelectedRow() != -1) {
+                selectBots();
+                textosNuevo();
+                int fila = jtblCursos.getSelectedRow();
+                jtxtNombre.setText(jtblCursos.getValueAt(fila, 1).toString());
             }
         });
     }
@@ -130,16 +155,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
 
     public void textosInicio() {
-        jtxtCedula.setEnabled(false);
         jtxtNombre.setEnabled(false);
-        jtxtApellido.setEnabled(false);
-        jtxtDireccion.setEnabled(false);
-        jtxtTelefono.setEnabled(false);
-        jtxtCedula.setText("");
         jtxtNombre.setText("");
-        jtxtApellido.setText("");
-        jtxtDireccion.setText("");
-        jtxtTelefono.setText("");
     }
 
     public void botonesNuevo() {
@@ -151,14 +168,10 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
 
     public void textosNuevo() {
-        jtxtCedula.setEnabled(true);
         jtxtNombre.setEnabled(true);
-        jtxtApellido.setEnabled(true);
-        jtxtDireccion.setEnabled(true);
-        jtxtTelefono.setEnabled(true);
     }
 
-    public void selectBotsEst() {
+    public void selectBots() {
         jbntNuevo.setEnabled(true);
         jbntGuardar.setEnabled(false);
         jbntEditar.setEnabled(true);
@@ -167,31 +180,24 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
 
     public void clear() {
-        jtxtCedula.setText("");
         jtxtNombre.setText("");
-        jtxtApellido.setText("");
-        jtxtDireccion.setText("");
-        jtxtTelefono.setText("");
     }
 
-    public void mostrarEstudiantes() {
+    public void mostrar() {
         try {
             DefaultTableModel modelo = new DefaultTableModel();
-            String titulos[] = {"cedula", "nombre", "apellido", "direccion", "telefono"};
-            String registros[] = new String[5];
+            String titulos[] = {"id", "nombre"};
+            String registros[] = new String[2];
             modelo.setColumnIdentifiers(titulos);
-            String SqlSelect = "select * from estudiantes";
+            String SqlSelect = "select * from cursos";
             Statement psd = cc.createStatement();
             ResultSet rs = psd.executeQuery(SqlSelect);
             while (rs.next()) {
                 registros[0] = rs.getString(1);
                 registros[1] = rs.getString(2);
-                registros[2] = rs.getString(3);
-                registros[3] = rs.getString(4);
-                registros[4] = rs.getString(5);
                 modelo.addRow(registros);
             }
-            jtblAlumnos.setModel(modelo);
+            jtblCursos.setModel(modelo);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -207,16 +213,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jtxtNombre = new javax.swing.JTextField();
-        jtxtApellido = new javax.swing.JTextField();
-        jtxtCedula = new componentes.UTCcedula();
-        jtxtTelefono = new componentes.UTCTelefono();
-        jtxtDireccion = new componentes.UTCDireccion();
+        jtxtNombre = new componentes.JLetterTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jbntNuevo = new javax.swing.JButton();
@@ -226,21 +224,15 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jbntCancelar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtblAlumnos = new javax.swing.JTable();
+        jtblCursos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setText("Cedula");
-
         jLabel2.setText("Nombre");
 
-        jLabel3.setText("Apellido");
-
-        jLabel4.setText("Direccion");
-
-        jLabel5.setText("Telefono");
+        jtxtNombre.setText("jLetterTextField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -248,48 +240,19 @@ public class Alumnos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtxtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jtxtApellido)
-                    .addComponent(jtxtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -377,7 +340,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jtblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
+        jtblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -388,7 +351,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jtblAlumnos);
+        jScrollPane1.setViewportView(jtblCursos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -412,7 +375,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 41, Short.MAX_VALUE)
+                .addGap(0, 39, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,11 +405,11 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbntGuardarActionPerformed
 
     private void jbntEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntEliminarActionPerformed
-        eliminarEstudiante();
+        eliminar();
     }//GEN-LAST:event_jbntEliminarActionPerformed
 
     private void jbntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntEditarActionPerformed
-        editarEstudiante();
+        editar();
     }//GEN-LAST:event_jbntEditarActionPerformed
 
     private void jbntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntNuevoActionPerformed
@@ -497,11 +460,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -512,11 +471,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbntEliminar;
     private javax.swing.JButton jbntGuardar;
     private javax.swing.JButton jbntNuevo;
-    private javax.swing.JTable jtblAlumnos;
-    private javax.swing.JTextField jtxtApellido;
-    private componentes.UTCcedula jtxtCedula;
-    private componentes.UTCDireccion jtxtDireccion;
-    private javax.swing.JTextField jtxtNombre;
-    private componentes.UTCTelefono jtxtTelefono;
+    private javax.swing.JTable jtblCursos;
+    private componentes.JLetterTextField jtxtNombre;
     // End of variables declaration//GEN-END:variables
 }
