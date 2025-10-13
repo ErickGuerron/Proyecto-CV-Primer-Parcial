@@ -239,7 +239,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiRInscripcionesActionPerformed
 
     private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        FormLogin lo = new FormLogin();
+        lo.setVisible(true);
     }//GEN-LAST:event_jmiSalirActionPerformed
 
     private void jmiCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCursosActionPerformed
