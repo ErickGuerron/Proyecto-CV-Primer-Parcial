@@ -107,10 +107,20 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gorro.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton1);
         jButton1.setBounds(0, 0, 40, 40);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/libro-cubierta-abierta.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton2);
         jButton2.setBounds(40, 0, 40, 40);
 
@@ -139,6 +149,11 @@ public class Principal extends javax.swing.JFrame {
 
         jmiCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiCursos.setText("Gestionar Cursos");
+        jmiCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCursosActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmiCursos);
 
         jmiInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -215,7 +230,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAdministracionActionPerformed
 
     private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
-        // TODO add your handling code here:
+
+        
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
     private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
@@ -225,6 +241,25 @@ public class Principal extends javax.swing.JFrame {
     private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmiSalirActionPerformed
+
+    private void jmiCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCursosActionPerformed
+       
+        Cursos c = new Cursos();
+        jdskPrincipal.add(c);
+        c.setVisible(true);
+    }//GEN-LAST:event_jmiCursosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Alumnos a = new Alumnos();
+        jdskPrincipal.add(a);
+        a.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Cursos c = new Cursos();
+        jdskPrincipal.add(c);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
