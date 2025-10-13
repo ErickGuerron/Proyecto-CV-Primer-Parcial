@@ -10,39 +10,47 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import interfaces.FormLogin;
+
 /**
  *
  * @author ErickGuerron
  */
 public class CLogin {
     
-    public void validarUsuario(JTextField usuario, JPasswordField password){
-        try{
-            ResultSet rs= null;
-            PreparedStatement psd = null;
-            
-            cuartouta.Conexion cc = new cuartouta.Conexion();
-            
-            String consulta ="select * from usuarios where usuarios.nom_usu=(?) and usuarios.con_usu=(?);";
-            psd = cc.conectar().prepareStatement(consulta);
-            
-            String contra= String.valueOf(password.getPassword());
-            
-            psd.setString(1, usuario.getText());
-            psd.setString(2, contra);
-           
-            rs = psd.executeQuery();
-            
-            if(rs.next()){
-                JOptionPane.showMessageDialog(null, "Se ha iniciado session correctamente");
-                interfaces.Principal p = new interfaces.Principal();
-                p.setVisible(true);
-            }else {
-                JOptionPane.showMessageDialog(null, "El usuario o contraseña es incorrecto","Credenciales invalidas", JOptionPane.ERROR_MESSAGE );
-            }
+    public void validarUsuario(JTextField usuario, JPasswordField password, FormLogin loginForm){
+    try{
+        ResultSet rs= null;
+        PreparedStatement psd = null;
         
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al iniciar session: "+ e,"Error",JOptionPane.ERROR_MESSAGE);
+        cuartouta.Conexion cc = new cuartouta.Conexion();
+        
+        String consulta ="select per_usu from usuarios where nom_usu=? and con_usu=?;";
+        psd = cc.conectar().prepareStatement(consulta);
+        
+        String contra= String.valueOf(password.getPassword());
+        
+        psd.setString(1, usuario.getText());
+        psd.setString(2, contra);
+       
+        rs = psd.executeQuery();
+        
+        if(rs.next()){
+            String perfilUsuario = rs.getString("per_usu");
+
+            JOptionPane.showMessageDialog(null, "Inicio de sesión correcto. Perfil: " + perfilUsuario);
+
+            interfaces.Principal p = new interfaces.Principal(perfilUsuario); 
+            p.setVisible(true);
+
+            loginForm.dispose();
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario o contraseña es incorrecto","Credenciales inválidas", JOptionPane.ERROR_MESSAGE );
         }
+    
+    } catch(Exception e){
+        JOptionPane.showMessageDialog(null, "Error al iniciar sesión: "+ e,"Error",JOptionPane.ERROR_MESSAGE);
     }
+}
 }

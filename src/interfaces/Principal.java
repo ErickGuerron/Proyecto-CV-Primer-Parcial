@@ -11,15 +11,25 @@ import javax.swing.Box;
  * @author ErickGuerron
  */
 public class Principal extends javax.swing.JFrame {
-
+    private String perfil; 
     /**
      * Creates new form Principal
      */
+
     public Principal() {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         BoxHorizontalGlue();
         setStyles();
+    }
+     
+    public Principal(String perfilUsuario) {
+        initComponents();
+        this.perfil = perfilUsuario;
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        BoxHorizontalGlue();
+        setStyles();
+        configurarMenuPorPerfil();
     }
 
     public void BoxHorizontalGlue() {
@@ -47,9 +57,27 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    
-    
+    private void configurarMenuPorPerfil() {
+        if (this.perfil != null && this.perfil.equalsIgnoreCase("secretaria")) {
+            jmAdministracion.setEnabled(false);
+            jmAdministracion.setVisible(false);
 
+            jButton1.setEnabled(false);
+            jButton2.setEnabled(false);
+            jButton3.setEnabled(false);
+            
+            jButton1.setVisible(false);
+            jButton2.setVisible(false);
+            jButton3.setVisible(false);
+
+        } else if (this.perfil != null && this.perfil.equalsIgnoreCase("administrador")) {
+            jmAdministracion.setEnabled(true);
+            jmReportes.setEnabled(true);
+        } else {
+            jmAdministracion.setEnabled(false);
+            jmReportes.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
