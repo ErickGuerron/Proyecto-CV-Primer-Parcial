@@ -109,7 +109,7 @@ public class FormLogin extends javax.swing.JFrame {
         jlblIngresar.setFont(new java.awt.Font("Myanmar Text", 1, 12)); // NOI18N
         jlblIngresar.setForeground(new java.awt.Color(255, 255, 255));
         jlblIngresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblIngresar.setText("INICIAR SECION");
+        jlblIngresar.setText("INICIAR SESIÓN");
 
         javax.swing.GroupLayout jbntIngresarLayout = new javax.swing.GroupLayout(jbntIngresar);
         jbntIngresar.setLayout(jbntIngresarLayout);
