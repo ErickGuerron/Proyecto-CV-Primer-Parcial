@@ -125,6 +125,11 @@ public class Principal extends javax.swing.JFrame {
         jButton2.setBounds(40, 0, 40, 40);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton3);
         jButton3.setBounds(80, 0, 40, 40);
 
@@ -158,6 +163,11 @@ public class Principal extends javax.swing.JFrame {
 
         jmiInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiInscripciones.setText("Inscripciones");
+        jmiInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiInscripcionesActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmiInscripciones);
 
         jbmBarraSuperior.add(jmAdministracion);
@@ -167,6 +177,11 @@ public class Principal extends javax.swing.JFrame {
 
         jmiMEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         jmiMEstudiantes.setText("Estudiantes");
+        jmiMEstudiantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMEstudiantesActionPerformed(evt);
+            }
+        });
         jmReportes.add(jmiMEstudiantes);
 
         jmiMCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
@@ -262,6 +277,22 @@ public class Principal extends javax.swing.JFrame {
         jdskPrincipal.add(c);
         c.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jmiInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiInscripcionesActionPerformed
+        Inscripciones i = new Inscripciones();
+        jdskPrincipal.add(i);
+        i.setVisible(true);
+    }//GEN-LAST:event_jmiInscripcionesActionPerformed
+
+    private void jmiMEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMEstudiantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiMEstudiantesActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Inscripciones i = new Inscripciones();
+        jdskPrincipal.add(i);
+        i.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
