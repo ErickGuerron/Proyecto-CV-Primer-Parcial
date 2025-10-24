@@ -1,181 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3e7cd1cf-e1b3-4328-915d-135708ffb271">
-	<property name="ireport.zoom" value="0.8481952367449697"/>
+<!--
+    VERSIÓN FINAL CORREGIDA Y MEJORADA
+    - Se ha corregido el error de sintaxis 'SAXParseException' moviendo la etiqueta <pen> a su lugar correcto.
+    - Se ha refinado la estética para un acabado aún más profesional.
+-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_profesional_estudiantes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e8d1a4a-1b1f-4b7c-8e8e-1f1f1f1f1f1f">
+	<property name="ireport.zoom" value="1.21"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="31"/>
-	<style name="Crosstab Data Text" hAlign="Center"/>
-	<style name="table">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
+	<property name="ireport.y" value="0"/>
+
+	<!-- ===== SECCIÓN DE ESTILOS PROFESIONALES ===== -->
+	<style name="ReportTitle" fontName="Arial" fontSize="22" isBold="true" forecolor="#2C5A8D"/>
+	<style name="ReportSubtitle" fontName="Arial" fontSize="12" forecolor="#555555"/>
+	<style name="TableHeader" mode="Opaque" backcolor="#2C5A8D" forecolor="#FFFFFF" fontName="Arial" fontSize="10" isBold="true" hAlign="Center" vAlign="Middle"/>
+	<style name="TableRow" fontName="Arial" fontSize="9" vAlign="Middle">
+		<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 	</style>
-	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<subDataset name="Curso" uuid="78934bfc-e4bf-4c11-aa30-ab27144038f0">
-		<queryString language="SQL">
-			<![CDATA[SELECT e.*, c.nom_cur
-FROM estudiantes e
-JOIN inscripciones i ON e.id_est = i.id_est_ins
-JOIN cursos c ON i.id_cur_ins = c.id_cur]]>
-		</queryString>
-		<field name="id_est" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="nom_est" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="ape_est" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="dir_est" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="tel_est" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-	</subDataset>
+	<style name="PageFooter" fontName="Arial" fontSize="8" isItalic="true" forecolor="#555555"/>
+
+	<!-- ===== PARÁMETROS Y CONSULTA ===== -->
 	<parameter name="cursoSeleccionado" class="java.lang.String"/>
+	
 	<queryString>
-		<![CDATA[SELECT e.*, c.nom_cur
-FROM estudiantes e
-JOIN inscripciones i ON e.id_est = i.id_est_ins
-JOIN cursos c ON i.id_cur_ins = c.id_cur
-WHERE c.nom_cur = $P{cursoSeleccionado}]]>
+		<![CDATA[SELECT e.id_est, e.nom_est, e.ape_est, e.dir_est, e.tel_est
+                 FROM estudiantes e
+                 JOIN inscripciones i ON e.id_est = i.id_est_ins
+                 JOIN cursos c ON i.id_cur_ins = c.id_cur
+                 WHERE c.nom_cur = $P{cursoSeleccionado}]]>
 	</queryString>
-	<field name="id_est" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nom_est" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ape_est" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="dir_est" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="tel_est" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nom_cur" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+
+	<!-- ===== CAMPOS ===== -->
+	<field name="id_est" class="java.lang.String"/>
+	<field name="nom_est" class="java.lang.String"/>
+	<field name="ape_est" class="java.lang.String"/>
+	<field name="dir_est" class="java.lang.String"/>
+	<field name="tel_est" class="java.lang.String"/>
+
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+
+	<!-- ===== BANDA DE TÍTULO (SOLO IMAGEN) ===== -->
 	<title>
-		<band height="216" splitType="Stretch">
+		<band height="180" splitType="Stretch">
 			<image scaleImage="FillFrame">
-				<reportElement x="0" y="0" width="555" height="216" uuid="2c0b4df2-841a-45d8-b45c-e7786ba249b0"/>
-				<imageExpression><![CDATA["src\\img\\HeaderReportes.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="180" uuid="2c0b4df2-841a-45d8-b45c-e7786ba249b0"/>
+				<imageExpression><![CDATA["../img/HeaderReportes.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
+
+	<!-- ===== CABECERA DE PÁGINA REDISEÑADA ===== -->
 	<pageHeader>
-		<band height="52" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="334" height="25" uuid="665cb506-c3fc-4433-af99-eddf13e40062"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Bahnschrift" size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Reportes de estudiantes por curso]]></text>
+				<reportElement style="ReportTitle" x="0" y="10" width="555" height="30" uuid="665cb506-c3fc-4433-af99-eddf13e40062"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[LISTADO DE ESTUDIANTES INSCRITOS]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="334" y="0" width="221" height="25" uuid="37945859-e009-4ab9-9f52-9da4c9a01275"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Bahnschrift" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="25" width="166" height="27" uuid="02aea046-1a1a-483d-99f9-2f7dc1248b78"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Bahnschrift"/>
-				</textElement>
-				<text><![CDATA[Curso seleccionado:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="166" y="25" width="389" height="27" uuid="7330199e-c7c2-4493-b246-8d9b80e18c40"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Bahnschrift"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{cursoSeleccionado}]]></textFieldExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="ReportSubtitle" x="0" y="40" width="555" height="20" uuid="7330199e-c7c2-4493-b246-8d9b80e18c40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Curso: " + $P{cursoSeleccionado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
+
+	<!-- ===== CABECERA DE COLUMNAS (TABLA MODERNA) ===== -->
 	<columnHeader>
-		<band height="27" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="0cb16ee6-e2f7-44cb-84a5-79b817f91b83"/>
-				<text><![CDATA[id_est]]></text>
+				<reportElement style="TableHeader" x="0" y="0" width="80" height="25" uuid="c1d2e3f4-a5b6-c7d8-e9f0-a1b2c3d4e5f6"/>
+				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="20" uuid="10a6fc70-e673-42ef-b27f-77f09a57859a"/>
-				<text><![CDATA[nom_est]]></text>
+				<reportElement style="TableHeader" x="80" y="0" width="120" height="25" uuid="d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6"/>
+				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="0" width="100" height="20" uuid="8cccabbe-d231-4e41-bd76-11968397bcd1"/>
-				<text><![CDATA[dir_est]]></text>
+				<reportElement style="TableHeader" x="200" y="0" width="120" height="25" uuid="e1f2a3b4-c5d6-e7f8-a9b0-c1d2e3f4a5b6"/>
+				<text><![CDATA[APELLIDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="1" width="100" height="20" uuid="9f9eb36e-f379-4bda-b23b-ee9c354f2033"/>
-				<text><![CDATA[tel_est]]></text>
+				<reportElement style="TableHeader" x="320" y="0" width="155" height="25" uuid="f1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6"/>
+				<text><![CDATA[DIRECCIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="1" width="100" height="20" uuid="9458ea22-5608-4e54-b0b2-ad8cbbdca8d7"/>
-				<text><![CDATA[ape_est]]></text>
+				<reportElement style="TableHeader" x="475" y="0" width="80" height="25" uuid="a2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7"/>
+				<text><![CDATA[TELÉFONO]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
+
+	<!-- ===== BANDA DE DETALLE (TABLA CON FILAS ALTERNADAS) ===== -->
 	<detail>
-		<band height="225" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="4893e035-075f-4628-922c-97eca12041e9"/>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="25" backcolor="#F7F7F7" uuid="a0a0a0a0-b1b1-c2c2-d3d3-e4e4e4e4e4e4">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></printWhenExpression>
+				</reportElement>
+				<!-- ===== ¡AQUÍ ESTÁ LA CORRECCIÓN! ===== -->
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="TableRow" x="0" y="0" width="80" height="25" uuid="b3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8"/>
 				<textFieldExpression><![CDATA[$F{id_est}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="100" y="6" width="100" height="20" uuid="c74df213-543c-472f-a1b5-3e48eebcb292"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="TableRow" x="80" y="0" width="120" height="25" uuid="c4d5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9"/>
 				<textFieldExpression><![CDATA[$F{nom_est}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="300" y="6" width="100" height="20" uuid="d03f7eaf-f3ee-4cc2-8e55-ca7b6d42bfc1"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="TableRow" x="200" y="0" width="120" height="25" uuid="d5e6f7a8-b9c0-d1e2-f3a4-b5c6d7e8f9a0"/>
+				<textFieldExpression><![CDATA[$F{ape_est}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="TableRow" x="320" y="0" width="155" height="25" uuid="e6f7a8b9-c0d1-e2f3-a4b5-c6d7e8f9a0b1"/>
 				<textFieldExpression><![CDATA[$F{dir_est}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="400" y="6" width="100" height="20" uuid="d72a7a62-fb51-4bc9-8e86-4b065b336ee2"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="TableRow" x="475" y="0" width="80" height="25" uuid="f7a8b9c0-d1e2-f3a4-b5c6-d7e8f9a0b1c2"/>
 				<textFieldExpression><![CDATA[$F{tel_est}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="200" y="6" width="100" height="20" uuid="cd0a57f0-4096-44fc-8e02-2ddcc31295d3"/>
-				<textFieldExpression><![CDATA[$F{ape_est}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
+	
+	<!-- ===== PIE DE PÁGINA MEJORADO ===== -->
 	<pageFooter>
-		<band height="27" splitType="Stretch">
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" forecolor="#CCCCCC" uuid="a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement style="PageFooter" x="0" y="10" width="200" height="20" uuid="b1c2d3e4-f5a6-b7c8-d9e0-f1a2b3c4d5e6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement x="437" y="0" width="80" height="27" uuid="2dc2397a-80d4-4fd9-b640-01c23c22fbba"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<reportElement style="PageFooter" x="435" y="10" width="80" height="20" uuid="2dc2397a-80d4-4fd9-b640-01c23c22fbba"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="517" y="0" width="40" height="27" uuid="8d5377a6-b882-4706-b4fc-61ef8bca4a10"/>
+				<reportElement style="PageFooter" x="515" y="10" width="40" height="20" uuid="8d5377a6-b882-4706-b4fc-61ef8bca4a10"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
