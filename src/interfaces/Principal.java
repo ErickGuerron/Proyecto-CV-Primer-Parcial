@@ -11,15 +11,25 @@ import javax.swing.Box;
  * @author ErickGuerron
  */
 public class Principal extends javax.swing.JFrame {
-
+    private String perfil; 
     /**
      * Creates new form Principal
      */
+
     public Principal() {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         BoxHorizontalGlue();
         setStyles();
+    }
+     
+    public Principal(String perfilUsuario) {
+        initComponents();
+        this.perfil = perfilUsuario;
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        BoxHorizontalGlue();
+        setStyles();
+        configurarMenuPorPerfil();
     }
 
     public void BoxHorizontalGlue() {
@@ -47,9 +57,27 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    
-    
+    private void configurarMenuPorPerfil() {
+        if (this.perfil != null && this.perfil.equalsIgnoreCase("secretaria")) {
+            jmAdministracion.setEnabled(false);
+            jmAdministracion.setVisible(false);
 
+            jButton1.setEnabled(false);
+            jButton2.setEnabled(false);
+            jButton3.setEnabled(false);
+            
+            jButton1.setVisible(false);
+            jButton2.setVisible(false);
+            jButton3.setVisible(false);
+
+        } else if (this.perfil != null && this.perfil.equalsIgnoreCase("administrador")) {
+            jmAdministracion.setEnabled(true);
+            jmReportes.setEnabled(true);
+        } else {
+            jmAdministracion.setEnabled(false);
+            jmReportes.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,14 +107,29 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gorro.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton1);
         jButton1.setBounds(0, 0, 40, 40);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/libro-cubierta-abierta.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton2);
         jButton2.setBounds(40, 0, 40, 40);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jdskPrincipal.add(jButton3);
         jButton3.setBounds(80, 0, 40, 40);
 
@@ -111,10 +154,20 @@ public class Principal extends javax.swing.JFrame {
 
         jmiCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiCursos.setText("Gestionar Cursos");
+        jmiCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCursosActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmiCursos);
 
         jmiInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiInscripciones.setText("Inscripciones");
+        jmiInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiInscripcionesActionPerformed(evt);
+            }
+        });
         jmAdministracion.add(jmiInscripciones);
 
         jbmBarraSuperior.add(jmAdministracion);
@@ -124,6 +177,11 @@ public class Principal extends javax.swing.JFrame {
 
         jmiMEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         jmiMEstudiantes.setText("Estudiantes");
+        jmiMEstudiantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiMEstudiantesActionPerformed(evt);
+            }
+        });
         jmReportes.add(jmiMEstudiantes);
 
         jmiMCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
@@ -187,7 +245,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAdministracionActionPerformed
 
     private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
-        // TODO add your handling code here:
+
+        
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
     private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
@@ -195,8 +254,46 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiRInscripcionesActionPerformed
 
     private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        FormLogin lo = new FormLogin();
+        lo.setVisible(true);
     }//GEN-LAST:event_jmiSalirActionPerformed
+
+    private void jmiCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCursosActionPerformed
+       
+        Cursos c = new Cursos();
+        jdskPrincipal.add(c);
+        c.setVisible(true);
+    }//GEN-LAST:event_jmiCursosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Alumnos a = new Alumnos();
+        jdskPrincipal.add(a);
+        a.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Cursos c = new Cursos();
+        jdskPrincipal.add(c);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jmiInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiInscripcionesActionPerformed
+        Inscripciones i = new Inscripciones();
+        jdskPrincipal.add(i);
+        i.setVisible(true);
+    }//GEN-LAST:event_jmiInscripcionesActionPerformed
+
+    private void jmiMEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMEstudiantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiMEstudiantesActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Inscripciones i = new Inscripciones();
+        jdskPrincipal.add(i);
+        i.pack();
+        i.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

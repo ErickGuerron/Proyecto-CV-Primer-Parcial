@@ -109,7 +109,7 @@ public class FormLogin extends javax.swing.JFrame {
         jlblIngresar.setFont(new java.awt.Font("Myanmar Text", 1, 12)); // NOI18N
         jlblIngresar.setForeground(new java.awt.Color(255, 255, 255));
         jlblIngresar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblIngresar.setText("INICIAR SECION");
+        jlblIngresar.setText("INICIAR SESIÓN");
 
         javax.swing.GroupLayout jbntIngresarLayout = new javax.swing.GroupLayout(jbntIngresar);
         jbntIngresar.setLayout(jbntIngresarLayout);
@@ -250,8 +250,7 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void jbntIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbntIngresarMouseClicked
         cuartouta.CLogin log = new cuartouta.CLogin();
-        log.validarUsuario(jtxtUsuario, jptxtPassword);
-        this.setVisible(false);
+        log.validarUsuario(jtxtUsuario, jptxtPassword, this); 
     }//GEN-LAST:event_jbntIngresarMouseClicked
 
     private void jpnlExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnlExitMouseClicked
