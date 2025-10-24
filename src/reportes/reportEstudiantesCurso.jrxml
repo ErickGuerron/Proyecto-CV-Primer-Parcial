@@ -19,7 +19,9 @@
 	<style name="PageFooter" fontName="Arial" fontSize="8" isItalic="true" forecolor="#555555"/>
 
 	<!-- ===== PARÁMETROS Y CONSULTA ===== -->
+       
 	<parameter name="cursoSeleccionado" class="java.lang.String"/>
+        <parameter name="IMAGEN_HEADER" class="java.io.InputStream"/>
 	
 	<queryString>
 		<![CDATA[SELECT e.id_est, e.nom_est, e.ape_est, e.dir_est, e.tel_est
@@ -45,8 +47,8 @@
 		<band height="180" splitType="Stretch">
 			<image scaleImage="FillFrame">
 				<reportElement x="0" y="0" width="555" height="180" uuid="2c0b4df2-841a-45d8-b45c-e7786ba249b0"/>
-				<imageExpression><![CDATA["../img/HeaderReportes.png"]]></imageExpression>
-			</image>
+                                <imageExpression><![CDATA[$P{IMAGEN_HEADER}]]></imageExpression>
+                        </image>
 		</band>
 	</title>
 
