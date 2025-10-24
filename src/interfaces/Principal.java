@@ -255,7 +255,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAdministracionActionPerformed
 
     private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
-
+       ReporteEstudiantes reporte = new ReporteEstudiantes();
+        jdskPrincipal.add(reporte);
+        reporte.setVisible(true);
         
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
