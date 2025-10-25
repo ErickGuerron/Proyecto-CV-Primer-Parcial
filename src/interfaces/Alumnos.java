@@ -5,6 +5,8 @@
 package interfaces;
 
 import cuartouta.Conexion;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.*;
 import java.util.ArrayList;               // === FILTRO DINÁMICO ===
 import java.util.List;                    // === FILTRO DINÁMICO ===
@@ -37,6 +39,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
      */
     public Alumnos() {
         initComponents();
+        aplicarEstilos();
         mostrarEstudiantes();
         cargarCampos();
         botonesInicio();
@@ -44,17 +47,64 @@ public class Alumnos extends javax.swing.JInternalFrame {
         setupFiltering();
     }
 
+    public void aplicarEstilos() {
+        // Estilos para etiquetas
+        Font labelFont = new Font("Arial", Font.BOLD, 14);
+        Color labelColor = Color.BLUE;
+        jLabel1.setFont(labelFont);
+        jLabel1.setForeground(labelColor);
+        jLabel2.setFont(labelFont);
+        jLabel2.setForeground(labelColor);
+        jLabel3.setFont(labelFont);
+        jLabel3.setForeground(labelColor);
+        jLabel4.setFont(labelFont);
+        jLabel4.setForeground(labelColor);
+        jLabel5.setFont(labelFont);
+        jLabel5.setForeground(labelColor);
+        jLabel6.setFont(labelFont);
+        jLabel6.setForeground(labelColor);
+
+        // Estilos para botones
+        Font buttonFont = new Font("Arial", Font.PLAIN, 12);
+        Color buttonBg = Color.LIGHT_GRAY;
+        jbntNuevo.setFont(buttonFont);
+        jbntNuevo.setBackground(buttonBg);
+        jbntGuardar.setFont(buttonFont);
+        jbntGuardar.setBackground(buttonBg);
+        jbntEditar.setFont(buttonFont);
+        jbntEditar.setBackground(buttonBg);
+        jbntEliminar.setFont(buttonFont);
+        jbntEliminar.setBackground(buttonBg);
+        jbntCancelar.setFont(buttonFont);
+        jbntCancelar.setBackground(buttonBg);
+
+        // Estilos para campos de texto
+        Font textFont = new Font("Arial", Font.PLAIN, 12);
+        jtxtCedula.setFont(textFont);
+        jtxtNombre.setFont(textFont);
+        jtxtApellido.setFont(textFont);
+        jtxtDireccion.setFont(textFont);
+        jtxtTelefono.setFont(textFont);
+        filterTextField.setFont(textFont);
+
+        // Estilos para la tabla
+        jtblAlumnos.setFont(textFont);
+        jtblAlumnos.setRowHeight(25);
+        jtblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        jtblAlumnos.getTableHeader().setBackground(Color.CYAN);
+    }
+
     public void guardar() {
 
         try {
             if (jtxtCedula.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio la cedula");
+                JOptionPane.showMessageDialog(null, "La cédula es obligatoria.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtCedula.requestFocus();
             } else if (jtxtNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio el nombre");
+                JOptionPane.showMessageDialog(null, "El nombre es obligatorio.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtNombre.requestFocus();
             } else if (jtxtApellido.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio el apellido");
+                JOptionPane.showMessageDialog(null, "El apellido es obligatorio.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtApellido.requestFocus();
             } else {
                 String SqlInsert = "insert into estudiantes values(?,?,?,?,?)";
@@ -66,34 +116,34 @@ public class Alumnos extends javax.swing.JInternalFrame {
                 psd.setString(5, jtxtTelefono.getText().trim().isEmpty() ? "0000000000" : jtxtTelefono.getText());
                 int n = psd.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Se Guardo Correctamente");
+                    JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente.", "Guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
                     mostrarEstudiantes();
                     botonesInicio();
                     textosInicio();
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error contactese con el administrador", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al guardar el estudiante. Contacte al administrador.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void eliminarEstudiante() {
         try {
             if ((JOptionPane.showConfirmDialog(null,
-                    "Desea eliminar al estudiante con cedula: '" + jtxtCedula.getText() + "'",
-                    "Borrar Estudiante",
+                    "¿Desea eliminar al estudiante con cédula: '" + jtxtCedula.getText() + "'?",
+                    "Confirmar eliminación",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 
                 String SqlDelete = "delete from estudiantes where id_est='" + jtxtCedula.getText() + "'";
                 PreparedStatement psd = cc.prepareStatement(SqlDelete);
                 int n = psd.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Se elimino correctamente");
+                    JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
                     mostrarEstudiantes();
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el estudiante. Contacte al administrador.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -108,11 +158,11 @@ public class Alumnos extends javax.swing.JInternalFrame {
             psd = cc.prepareStatement(SqlUpdate);
             int n = psd.executeUpdate();
             if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+                JOptionPane.showMessageDialog(null, "Estudiante actualizado correctamente.", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
                 mostrarEstudiantes();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al actualizar el estudiante. Contacte al administrador.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
