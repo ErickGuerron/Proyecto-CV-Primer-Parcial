@@ -96,15 +96,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiRInscripcionesActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="JReporteGenero">
+            <MenuItem class="javax.swing.JMenuItem" name="jmniRXEstudiante">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+O"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Reporte Curso Genero"/>
+                <Property name="text" type="java.lang.String" value="Ficha de estudiante"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JReporteGeneroActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmniRXEstudianteActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

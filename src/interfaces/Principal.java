@@ -11,9 +11,7 @@ import javax.swing.Box;
  * @author ErickGuerron
  */
 public class Principal extends javax.swing.JFrame {
-
-    private String perfil;
-
+    private String perfil;  
     /**
      * Creates new form Principal
      */
@@ -103,7 +101,7 @@ public class Principal extends javax.swing.JFrame {
         jmiMEstudiantes = new javax.swing.JMenuItem();
         jmiMCursos = new javax.swing.JMenuItem();
         jmiRInscripciones = new javax.swing.JMenuItem();
-        JReporteGenero = new javax.swing.JMenuItem();
+        jmniRXEstudiante = new javax.swing.JMenuItem();
         jmCuenta = new javax.swing.JMenu();
         jmiSalir = new javax.swing.JMenuItem();
 
@@ -205,14 +203,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jmReportes.add(jmiRInscripciones);
 
-        JReporteGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        JReporteGenero.setText("Reporte Curso Genero");
-        JReporteGenero.addActionListener(new java.awt.event.ActionListener() {
+        jmniRXEstudiante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmniRXEstudiante.setText("Ficha de estudiante");
+        jmniRXEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JReporteGeneroActionPerformed(evt);
+                jmniRXEstudianteActionPerformed(evt);
             }
         });
-        jmReportes.add(JReporteGenero);
+        jmReportes.add(jmniRXEstudiante);
 
         jbmBarraSuperior.add(jmReportes);
 
@@ -295,6 +293,7 @@ public class Principal extends javax.swing.JFrame {
     private void jmiInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiInscripcionesActionPerformed
         Inscripciones i = new Inscripciones();
         jdskPrincipal.add(i);
+        i.pack();
         i.setVisible(true);
     }//GEN-LAST:event_jmiInscripcionesActionPerformed
 
@@ -309,12 +308,11 @@ public class Principal extends javax.swing.JFrame {
         i.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void JReporteGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JReporteGeneroActionPerformed
-        // TODO add your handling code here:
-      ReporteCursoGeneros reporte = new ReporteCursoGeneros(jdskPrincipal);
-    
-        reporte.setVisible(true);
-    }//GEN-LAST:event_JReporteGeneroActionPerformed
+    private void jmniRXEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniRXEstudianteActionPerformed
+        ReporteXEstudiante ventanaBusqueda = new ReporteXEstudiante();
+        jdskPrincipal.add(ventanaBusqueda);
+        ventanaBusqueda.setVisible(true);
+    }//GEN-LAST:event_jmniRXEstudianteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,7 +355,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JMenuBar jbmBarraSuperior;
-    private componentes.JDKFondo jdskPrincipal;
+    public static componentes.JDKFondo jdskPrincipal;
     private javax.swing.JMenu jmAdministracion;
     private javax.swing.JMenu jmCuenta;
     private javax.swing.JMenu jmReportes;
@@ -368,5 +366,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiMEstudiantes;
     private javax.swing.JMenuItem jmiRInscripciones;
     private javax.swing.JMenuItem jmiSalir;
+    private javax.swing.JMenuItem jmniRXEstudiante;
     // End of variables declaration//GEN-END:variables
 }
