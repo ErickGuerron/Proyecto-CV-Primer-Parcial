@@ -49,9 +49,9 @@ public class Principal extends javax.swing.JFrame {
         jmiCursos.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jmiInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jmReportes.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        jmiMEstudiantes.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jmiMCursos.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jmiRInscripciones.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiRGenero.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jmiRXEstudiante.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jmCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18));
         jmiSalir.setFont(new java.awt.Font("Segoe UI", 0, 14));
 
@@ -98,10 +98,9 @@ public class Principal extends javax.swing.JFrame {
         jmiCursos = new javax.swing.JMenuItem();
         jmiInscripciones = new javax.swing.JMenuItem();
         jmReportes = new javax.swing.JMenu();
-        jmiMEstudiantes = new javax.swing.JMenuItem();
         jmiMCursos = new javax.swing.JMenuItem();
-        jmiRInscripciones = new javax.swing.JMenuItem();
-        jmniRXEstudiante = new javax.swing.JMenuItem();
+        jmiRXEstudiante = new javax.swing.JMenuItem();
+        jmiRGenero = new javax.swing.JMenuItem();
         jmCuenta = new javax.swing.JMenu();
         jmiSalir = new javax.swing.JMenuItem();
 
@@ -176,15 +175,6 @@ public class Principal extends javax.swing.JFrame {
         jmReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/prueba.png"))); // NOI18N
         jmReportes.setText("Reportes");
 
-        jmiMEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jmiMEstudiantes.setText("Estudiantes");
-        jmiMEstudiantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiMEstudiantesActionPerformed(evt);
-            }
-        });
-        jmReportes.add(jmiMEstudiantes);
-
         jmiMCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         jmiMCursos.setText("Cursos");
         jmiMCursos.addActionListener(new java.awt.event.ActionListener() {
@@ -194,23 +184,23 @@ public class Principal extends javax.swing.JFrame {
         });
         jmReportes.add(jmiMCursos);
 
-        jmiRInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jmiRInscripciones.setText("Reporte Inscripciones");
-        jmiRInscripciones.addActionListener(new java.awt.event.ActionListener() {
+        jmiRXEstudiante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiRXEstudiante.setText("Ficha de estudiante");
+        jmiRXEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiRInscripcionesActionPerformed(evt);
+                jmiRXEstudianteActionPerformed(evt);
             }
         });
-        jmReportes.add(jmiRInscripciones);
+        jmReportes.add(jmiRXEstudiante);
 
-        jmniRXEstudiante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jmniRXEstudiante.setText("Ficha de estudiante");
-        jmniRXEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        jmiRGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiRGenero.setText("Reporte Genero");
+        jmiRGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmniRXEstudianteActionPerformed(evt);
+                jmiRGeneroActionPerformed(evt);
             }
         });
-        jmReportes.add(jmniRXEstudiante);
+        jmReportes.add(jmiRGenero);
 
         jbmBarraSuperior.add(jmReportes);
 
@@ -261,9 +251,10 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
-    private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmiRInscripcionesActionPerformed
+    private void jmiRGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRGeneroActionPerformed
+        ReporteCursoGeneros rg = new ReporteCursoGeneros(jdskPrincipal);
+        rg.setVisible(true);
+    }//GEN-LAST:event_jmiRGeneroActionPerformed
 
     private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
         this.setVisible(false);
@@ -297,10 +288,6 @@ public class Principal extends javax.swing.JFrame {
         i.setVisible(true);
     }//GEN-LAST:event_jmiInscripcionesActionPerformed
 
-    private void jmiMEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMEstudiantesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jmiMEstudiantesActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Inscripciones i = new Inscripciones();
         jdskPrincipal.add(i);
@@ -308,11 +295,11 @@ public class Principal extends javax.swing.JFrame {
         i.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jmniRXEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmniRXEstudianteActionPerformed
-        ReporteXEstudiante ventanaBusqueda = new ReporteXEstudiante();
+    private void jmiRXEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRXEstudianteActionPerformed
+        ReporteXEstudiante ventanaBusqueda = new ReporteXEstudiante(jdskPrincipal);
         jdskPrincipal.add(ventanaBusqueda);
         ventanaBusqueda.setVisible(true);
-    }//GEN-LAST:event_jmniRXEstudianteActionPerformed
+    }//GEN-LAST:event_jmiRXEstudianteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,12 +337,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem JReporteGenero;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JMenuBar jbmBarraSuperior;
-    public static componentes.JDKFondo jdskPrincipal;
+    private componentes.JDKFondo jdskPrincipal;
     private javax.swing.JMenu jmAdministracion;
     private javax.swing.JMenu jmCuenta;
     private javax.swing.JMenu jmReportes;
@@ -363,9 +349,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiEstudiantes;
     private javax.swing.JMenuItem jmiInscripciones;
     private javax.swing.JMenuItem jmiMCursos;
-    private javax.swing.JMenuItem jmiMEstudiantes;
-    private javax.swing.JMenuItem jmiRInscripciones;
+    private javax.swing.JMenuItem jmiRGenero;
+    private javax.swing.JMenuItem jmiRXEstudiante;
     private javax.swing.JMenuItem jmiSalir;
-    private javax.swing.JMenuItem jmniRXEstudiante;
     // End of variables declaration//GEN-END:variables
 }

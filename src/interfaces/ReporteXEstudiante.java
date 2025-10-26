@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -24,13 +25,20 @@ import net.sf.jasperreports.swing.JRViewer;
  * @author THINKPAD
  */
 public class ReporteXEstudiante extends javax.swing.JInternalFrame {
-
+    JDesktopPane jdskPane;
     /**
      * Creates new form ReporteXEstudiante
      */
     public ReporteXEstudiante() {
         initComponents();
         jbtnReporte.setEnabled(false);
+        configurarListenerCedula();
+    }
+    
+     public ReporteXEstudiante(JDesktopPane jdskPane) {
+        initComponents();
+        jbtnReporte.setEnabled(false);
+        this.jdskPane=jdskPane;
         configurarListenerCedula();
     }
 
@@ -99,7 +107,7 @@ public class ReporteXEstudiante extends javax.swing.JInternalFrame {
                 reporteFrame.pack();
                 reporteFrame.setSize(800, 600);
 
-                Principal.jdskPrincipal.add(reporteFrame);
+                this.jdskPane.add(reporteFrame);
                 reporteFrame.setVisible(true);
 
                 this.dispose(); 
