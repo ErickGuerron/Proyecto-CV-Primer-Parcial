@@ -11,7 +11,9 @@ import javax.swing.Box;
  * @author ErickGuerron
  */
 public class Principal extends javax.swing.JFrame {
-    private String perfil; 
+
+    private String perfil;
+
     /**
      * Creates new form Principal
      */
@@ -22,7 +24,7 @@ public class Principal extends javax.swing.JFrame {
         BoxHorizontalGlue();
         setStyles();
     }
-     
+
     public Principal(String perfilUsuario) {
         initComponents();
         this.perfil = perfilUsuario;
@@ -38,9 +40,9 @@ public class Principal extends javax.swing.JFrame {
         jbmBarraSuperior.add(jmCuenta);
 
     }
-    
-        public void setStyles() {
-        
+
+    public void setStyles() {
+
         jdskPrincipal.setImagenFondo("/img/back.png");
 
         jbmBarraSuperior.setPreferredSize(new java.awt.Dimension(213, 40));
@@ -65,7 +67,7 @@ public class Principal extends javax.swing.JFrame {
             jButton1.setEnabled(false);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
-            
+
             jButton1.setVisible(false);
             jButton2.setVisible(false);
             jButton3.setVisible(false);
@@ -101,6 +103,7 @@ public class Principal extends javax.swing.JFrame {
         jmiMEstudiantes = new javax.swing.JMenuItem();
         jmiMCursos = new javax.swing.JMenuItem();
         jmiRInscripciones = new javax.swing.JMenuItem();
+        JReporteGenero = new javax.swing.JMenuItem();
         jmCuenta = new javax.swing.JMenu();
         jmiSalir = new javax.swing.JMenuItem();
 
@@ -202,6 +205,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jmReportes.add(jmiRInscripciones);
 
+        JReporteGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        JReporteGenero.setText("Reporte Curso Genero");
+        JReporteGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JReporteGeneroActionPerformed(evt);
+            }
+        });
+        jmReportes.add(JReporteGenero);
+
         jbmBarraSuperior.add(jmReportes);
 
         jmCuenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario-de-pizarra.png"))); // NOI18N
@@ -245,10 +257,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAdministracionActionPerformed
 
     private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
-       ReporteEstudiantes reporte = new ReporteEstudiantes();
+        ReporteEstudiantes reporte = new ReporteEstudiantes();
         jdskPrincipal.add(reporte);
         reporte.setVisible(true);
-        
+
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
     private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
@@ -262,7 +274,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiSalirActionPerformed
 
     private void jmiCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCursosActionPerformed
-       
+
         Cursos c = new Cursos();
         jdskPrincipal.add(c);
         c.setVisible(true);
@@ -296,6 +308,13 @@ public class Principal extends javax.swing.JFrame {
         i.pack();
         i.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void JReporteGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JReporteGeneroActionPerformed
+        // TODO add your handling code here:
+      ReporteCursoGeneros reporte = new ReporteCursoGeneros(jdskPrincipal);
+    
+        reporte.setVisible(true);
+    }//GEN-LAST:event_JReporteGeneroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,6 +352,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JReporteGenero;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
