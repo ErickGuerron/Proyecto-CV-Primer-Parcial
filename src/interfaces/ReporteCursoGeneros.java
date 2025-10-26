@@ -47,7 +47,7 @@ public class ReporteCursoGeneros extends javax.swing.JInternalFrame {
             Connection cn = cc.conectar();
 
             // Cargar el archivo .jasper
-            InputStream reporteStream = getClass().getResourceAsStream("/reportes/reportCursoGenero.jasper");
+            InputStream reporteStream = getClass().getResourceAsStream("/reportes/reportCursoGeneros.jasper");
             if (reporteStream == null) {
                 JOptionPane.showMessageDialog(this,
                         "No se encontró el archivo del reporte (reportCursoGenero.jasper)",
