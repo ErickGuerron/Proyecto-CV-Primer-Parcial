@@ -93,7 +93,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jLstCursos = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -150,6 +150,11 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         });
 
         jbtnEliminar.setText("Eliminar");
+        jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEliminarActionPerformed(evt);
+            }
+        });
 
         jbtnCancelar.setText("Cancelar");
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -270,6 +275,10 @@ public class Inscripciones extends javax.swing.JInternalFrame {
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
         agregarInscripcion();
     }//GEN-LAST:event_jbtnAgregarActionPerformed
+
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+        eliminarInscripcion();
+    }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,14 +455,6 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         return null;
     }
 
-    private void desasignarCursosDeEstudiante(String idEst) throws SQLException {
-        String sql = "DELETE FROM inscripciones WHERE id_est_ins= ?";
-        try (PreparedStatement ps = cc.prepareStatement(sql)) {
-            ps.setString(1, idEst);
-            ps.executeUpdate();
-        }
-    }
-
     private void desasignarCursoEspecifico(String idEst, String idCur) throws SQLException {
         String sql = "DELETE FROM inscripciones WHERE id_est_ins = ? AND id_cur_ins = ?";
         try (PreparedStatement ps = cc.prepareStatement(sql)) {
@@ -541,57 +542,6 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         }
     }
     
-    private void editarinscripcion(){
-        if (!accionesHabilitadas) {
-            return;
-        }
-        String idEst = obtenerEstudianteIdSeleccionado();
-        String idCur = obtenerCursoIdSeleccionado();
-
-        if (idCur == null) {
-            Object sel = jComboBox1.getSelectedItem();
-            if (sel != null) {
-                idCur = obtenerCursoIdPorNombre(sel.toString());
-            }
-        }
-        if (idEst == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un estudiante", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (idCur == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un nuevo curso", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            String cursoActualNombre = obtenerCursoPorEstudiante(idEst);
-            String cursoNuevoNombre = jComboBox1.getSelectedItem().toString();
-
-            if (cursoActualNombre != null && cursoActualNombre.equals(cursoNuevoNombre)) {
-                JOptionPane.showMessageDialog(this, "El estudiante ya está inscrito en este curso.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
-            int updated = asignarCursoAEstudianteForzado(idCur, idEst);
-
-            if (updated > 0) {
-                logger.log(Level.INFO, "Edición realizada - curso: {0}, estudiante: {1}", new Object[]{idCur, idEst});
-                JOptionPane.showMessageDialog(this, "Cambio realizado.", "Edición", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo cambiar el curso. (El estudiante no tenía inscripción previa)", "Sin cambios", JOptionPane.WARNING_MESSAGE);
-            }
-
-            String curso = obtenerCursoPorEstudiante(idEst);
-            cargarCursosDeEstudianteEnLista(idEst);
-            boolean tieneCurso = (curso != null && !curso.isBlank());
-            jbtnAgregar.setEnabled(accionesHabilitadas && tieneCurso);
-            jbtnEliminar.setEnabled(accionesHabilitadas && tieneCurso);
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Error al editar asignación", ex);
-            JOptionPane.showMessageDialog(this, "Error al cambiar curso", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
     private void eliminarInscripcion(){
         if (!accionesHabilitadas) {
             return;
@@ -630,15 +580,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al eliminar relación", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-                                      
-
-    private void jbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        editarinscripcion();
-    }                                            
-
-    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        eliminarInscripcion();
-    }                                              
+                                                                                                                            
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JlstEstudiantes;
