@@ -105,7 +105,7 @@ public class ReporteXEstudiante extends javax.swing.JInternalFrame {
 
                 reporteFrame.getContentPane().add(viewer);
                 reporteFrame.pack();
-                reporteFrame.setSize(800, 600);
+                reporteFrame.setSize(jdskPane.getWidth(), jdskPane.getHeight());
 
                 this.jdskPane.add(reporteFrame);
                 reporteFrame.setVisible(true);
