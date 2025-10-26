@@ -22,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
         BoxHorizontalGlue();
         setStyles();
     }
-     
+
     public Principal(String perfilUsuario) {
         initComponents();
         this.perfil = perfilUsuario;
@@ -38,9 +38,9 @@ public class Principal extends javax.swing.JFrame {
         jbmBarraSuperior.add(jmCuenta);
 
     }
-    
-        public void setStyles() {
-        
+
+    public void setStyles() {
+
         jdskPrincipal.setImagenFondo("/img/back.png");
 
         jbmBarraSuperior.setPreferredSize(new java.awt.Dimension(213, 40));
@@ -65,7 +65,7 @@ public class Principal extends javax.swing.JFrame {
             jButton1.setEnabled(false);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
-            
+
             jButton1.setVisible(false);
             jButton2.setVisible(false);
             jButton3.setVisible(false);
@@ -255,10 +255,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAdministracionActionPerformed
 
     private void jmiMCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiMCursosActionPerformed
-       ReporteEstudiantes reporte = new ReporteEstudiantes();
+       ReporteEstudiantes reporte = new ReporteEstudiantes(jdskPrincipal);
         jdskPrincipal.add(reporte);
         reporte.setVisible(true);
-        
+
     }//GEN-LAST:event_jmiMCursosActionPerformed
 
     private void jmiRInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRInscripcionesActionPerformed
@@ -272,7 +272,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiSalirActionPerformed
 
     private void jmiCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCursosActionPerformed
-       
+
         Cursos c = new Cursos();
         jdskPrincipal.add(c);
         c.setVisible(true);
@@ -350,6 +350,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JReporteGenero;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
