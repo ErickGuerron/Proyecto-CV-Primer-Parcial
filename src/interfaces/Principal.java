@@ -144,6 +144,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jmiEstudiantes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiEstudiantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gorro.png"))); // NOI18N
         jmiEstudiantes.setText("Gestionar Estudiantes");
         jmiEstudiantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +154,7 @@ public class Principal extends javax.swing.JFrame {
         jmAdministracion.add(jmiEstudiantes);
 
         jmiCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiCursos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/libro-cubierta-abierta.png"))); // NOI18N
         jmiCursos.setText("Gestionar Cursos");
         jmiCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +164,7 @@ public class Principal extends javax.swing.JFrame {
         jmAdministracion.add(jmiCursos);
 
         jmiInscripciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiInscripciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
         jmiInscripciones.setText("Inscripciones");
         jmiInscripciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +179,7 @@ public class Principal extends javax.swing.JFrame {
         jmReportes.setText("Reportes");
 
         jmiMCursos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiMCursos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/laptop.png"))); // NOI18N
         jmiMCursos.setText("Cursos");
         jmiMCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +189,7 @@ public class Principal extends javax.swing.JFrame {
         jmReportes.add(jmiMCursos);
 
         jmiRXEstudiante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiRXEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/immigration.png"))); // NOI18N
         jmiRXEstudiante.setText("Ficha de estudiante");
         jmiRXEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +199,7 @@ public class Principal extends javax.swing.JFrame {
         jmReportes.add(jmiRXEstudiante);
 
         jmiRGenero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        jmiRGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bar-chart.png"))); // NOI18N
         jmiRGenero.setText("Reporte Genero");
         jmiRGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +214,7 @@ public class Principal extends javax.swing.JFrame {
         jmCuenta.setText("Cuenta");
 
         jmiSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logout.png"))); // NOI18N
         jmiSalir.setText("Salir");
         jmiSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
