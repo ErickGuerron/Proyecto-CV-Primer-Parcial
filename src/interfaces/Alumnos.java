@@ -63,6 +63,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jLabel5.setForeground(labelColor);
         jLabel6.setFont(labelFont);
         jLabel6.setForeground(labelColor);
+        jLabel7.setFont(labelFont);
+        jLabel7.setForeground(labelColor);
 
         // Estilos para botones
         Font buttonFont = new Font("Arial", Font.PLAIN, 12);
