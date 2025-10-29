@@ -5,6 +5,8 @@
 package interfaces;
 
 import cuartouta.Conexion;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.*;
 import java.util.ArrayList;               // === FILTRO DINÁMICO ===
 import java.util.List;                    // === FILTRO DINÁMICO ===
@@ -37,6 +39,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
      */
     public Alumnos() {
         initComponents();
+        aplicarEstilos();
         mostrarEstudiantes();
         cargarCampos();
         botonesInicio();
@@ -44,97 +47,168 @@ public class Alumnos extends javax.swing.JInternalFrame {
         setupFiltering();
     }
 
-    public void guardar() {
+    public void aplicarEstilos() {
+        // Estilos para etiquetas
+        Font labelFont = new Font("Arial", Font.BOLD, 14);
+        Color labelColor = Color.BLUE;
+        jLabel1.setFont(labelFont);
+        jLabel1.setForeground(labelColor);
+        jLabel2.setFont(labelFont);
+        jLabel2.setForeground(labelColor);
+        jLabel3.setFont(labelFont);
+        jLabel3.setForeground(labelColor);
+        jLabel4.setFont(labelFont);
+        jLabel4.setForeground(labelColor);
+        jLabel5.setFont(labelFont);
+        jLabel5.setForeground(labelColor);
+        jLabel6.setFont(labelFont);
+        jLabel6.setForeground(labelColor);
+        jLabel7.setFont(labelFont);
+        jLabel7.setForeground(labelColor);
 
+        // Estilos para botones
+        Font buttonFont = new Font("Arial", Font.PLAIN, 12);
+        Color buttonBg = Color.LIGHT_GRAY;
+        jbntNuevo.setFont(buttonFont);
+        jbntNuevo.setBackground(buttonBg);
+        jbntGuardar.setFont(buttonFont);
+        jbntGuardar.setBackground(buttonBg);
+        jbntEditar.setFont(buttonFont);
+        jbntEditar.setBackground(buttonBg);
+        jbntEliminar.setFont(buttonFont);
+        jbntEliminar.setBackground(buttonBg);
+        jbntCancelar.setFont(buttonFont);
+        jbntCancelar.setBackground(buttonBg);
+
+        // Estilos para campos de texto
+        Font textFont = new Font("Arial", Font.PLAIN, 12);
+        jtxtCedula.setFont(textFont);
+        jtxtNombre.setFont(textFont);
+        jtxtApellido.setFont(textFont);
+        jtxtDireccion.setFont(textFont);
+        jtxtTelefono.setFont(textFont);
+        filterTextField.setFont(textFont);
+
+        // Estilos para la tabla
+        jtblAlumnos.setFont(textFont);
+        jtblAlumnos.setRowHeight(25);
+        jtblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        jtblAlumnos.getTableHeader().setBackground(Color.CYAN);
+    }
+
+    public void guardar() {
         try {
             if (jtxtCedula.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio la cedula");
+                JOptionPane.showMessageDialog(null, "La cédula es obligatoria.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtCedula.requestFocus();
             } else if (jtxtNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio el nombre");
+                JOptionPane.showMessageDialog(null, "El nombre es obligatorio.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtNombre.requestFocus();
             } else if (jtxtApellido.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Es obligatorio el apellido");
+                JOptionPane.showMessageDialog(null, "El apellido es obligatorio.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
                 jtxtApellido.requestFocus();
+            } else if (jcbxGenero.getSelectedItem() == null || jcbxGenero.getSelectedItem().toString().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Es obligatorio seleccionar el género");
+                jcbxGenero.requestFocus();
             } else {
-                String SqlInsert = "insert into estudiantes values(?,?,?,?,?)";
+                String genero = jcbxGenero.getSelectedItem().toString().equals("Masculino") ? "M" : "F";
+
+                String SqlInsert = "insert into estudiantes values(?,?,?,?,?,?)";
                 PreparedStatement psd = cc.prepareStatement(SqlInsert);
+
                 psd.setString(1, jtxtCedula.getText());
                 psd.setString(2, jtxtNombre.getText());
                 psd.setString(3, jtxtApellido.getText());
                 psd.setString(4, jtxtDireccion.getText().trim().isEmpty() ? "S/N" : jtxtDireccion.getText());
                 psd.setString(5, jtxtTelefono.getText().trim().isEmpty() ? "0000000000" : jtxtTelefono.getText());
+                psd.setString(6, genero); // Guardar solo M o F
+
                 int n = psd.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Se Guardo Correctamente");
+                    JOptionPane.showMessageDialog(null, "Estudiante guardado correctamente.", "Guardado exitoso", JOptionPane.INFORMATION_MESSAGE);
                     mostrarEstudiantes();
                     botonesInicio();
                     textosInicio();
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error contactese con el administrador", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al guardar el estudiante. Contacte al administrador.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void eliminarEstudiante() {
         try {
             if ((JOptionPane.showConfirmDialog(null,
-                    "Desea eliminar al estudiante con cedula: '" + jtxtCedula.getText() + "'",
-                    "Borrar Estudiante",
+                    "¿Desea eliminar al estudiante con cédula: '" + jtxtCedula.getText() + "'?",
+                    "Confirmar eliminación",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 
                 String SqlDelete = "delete from estudiantes where id_est='" + jtxtCedula.getText() + "'";
                 PreparedStatement psd = cc.prepareStatement(SqlDelete);
                 int n = psd.executeUpdate();
                 if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Se elimino correctamente");
+                    JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente.", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
                     mostrarEstudiantes();
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el estudiante. Contacte al administrador.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void editarEstudiante() {
-        try {
-            String SqlUpdate = "update estudiantes set nom_est='" + jtxtNombre.getText()
-                    + "',ape_est='" + jtxtApellido.getText() + "',"
-                    + "dir_est='" + jtxtDireccion.getText() + "',"
-                    + "tel_est='" + jtxtTelefono.getText() + "'"
-                    + " where id_est='" + jtxtCedula.getText() + "'";
-            PreparedStatement psd;
-            psd = cc.prepareStatement(SqlUpdate);
-            int n = psd.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
-                mostrarEstudiantes();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+    try {
+        String genero = jcbxGenero.getSelectedItem().toString().equals("Masculino") ? "M" : "F";
+
+        String SqlUpdate = "update estudiantes set nom_est='" + jtxtNombre.getText()
+                + "',ape_est='" + jtxtApellido.getText() + "',"
+                + "dir_est='" + jtxtDireccion.getText() + "',"
+                + "tel_est='" + jtxtTelefono.getText() + "',"
+                + "gen_est='" + genero + "'"
+                + " where id_est='" + jtxtCedula.getText() + "'";
+
+        PreparedStatement psd;
+        psd = cc.prepareStatement(SqlUpdate);
+        int n = psd.executeUpdate();
+        if (n > 0) {
+            JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+            mostrarEstudiantes();
         }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
-    public void cargarCampos() {
-        jtblAlumnos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (jtblAlumnos.getSelectedRow() != -1) {
-                    selectBotsEst();
-                    textosNuevo();
-                    int fila = jtblAlumnos.getSelectedRow();
-                    int modelRow = (sorter != null) ? jtblAlumnos.convertRowIndexToModel(fila) : fila;
 
-                    jtxtCedula.setText(jtblAlumnos.getValueAt(fila, 0).toString());
-                    jtxtNombre.setText(jtblAlumnos.getValueAt(fila, 1).toString());
-                    jtxtApellido.setText(jtblAlumnos.getValueAt(fila, 2).toString());
-                    jtxtDireccion.setText(jtblAlumnos.getValueAt(fila, 3).toString());
-                    jtxtTelefono.setText(jtblAlumnos.getValueAt(fila, 4).toString());
+   public void cargarCampos() {
+    jtblAlumnos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (jtblAlumnos.getSelectedRow() != -1) {
+                selectBotsEst();
+                textosNuevo();
+                int fila = jtblAlumnos.getSelectedRow();
+                int modelRow = (sorter != null) ? jtblAlumnos.convertRowIndexToModel(fila) : fila;
+
+                // Asignar los valores a los campos de texto
+                jtxtCedula.setText(jtblAlumnos.getValueAt(fila, 0).toString());
+                jtxtNombre.setText(jtblAlumnos.getValueAt(fila, 1).toString());
+                jtxtApellido.setText(jtblAlumnos.getValueAt(fila, 2).toString());
+                jtxtDireccion.setText(jtblAlumnos.getValueAt(fila, 4).toString());
+                jtxtTelefono.setText(jtblAlumnos.getValueAt(fila, 5).toString());
+
+                // Cargar el género en el JComboBox
+                String genero = jtblAlumnos.getValueAt(fila, 3).toString(); // Columna de género (index 3)
+                if (genero.equals("Masculino")) {
+                    jcbxGenero.setSelectedItem("Masculino");
+                } else {
+                    jcbxGenero.setSelectedItem("Femenino");
                 }
             }
-        });
-    }
+        }
+    });
+}
+
 
     public void botonesInicio() {
         jbntNuevo.setEnabled(true);
@@ -142,6 +216,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jbntEditar.setEnabled(false);
         jbntEliminar.setEnabled(false);
         jbntCancelar.setEnabled(true);
+
     }
 
     public void textosInicio() {
@@ -150,11 +225,13 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtApellido.setEnabled(false);
         jtxtDireccion.setEnabled(false);
         jtxtTelefono.setEnabled(false);
+        jcbxGenero.setEnabled(false);
         jtxtCedula.setText("");
         jtxtNombre.setText("");
         jtxtApellido.setText("");
         jtxtDireccion.setText("");
         jtxtTelefono.setText("");
+
     }
 
     public void botonesNuevo() {
@@ -171,6 +248,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtApellido.setEnabled(true);
         jtxtDireccion.setEnabled(true);
         jtxtTelefono.setEnabled(true);
+        jcbxGenero.setEnabled(true);
     }
 
     public void selectBotsEst() {
@@ -187,13 +265,15 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtApellido.setText("");
         jtxtDireccion.setText("");
         jtxtTelefono.setText("");
+        jcbxGenero.setSelectedIndex(0);
+        jcbxGenero.restaurarBordeOriginal();
     }
 
     public void mostrarEstudiantes() {
         try {
             DefaultTableModel modelo = new DefaultTableModel();
-            String titulos[] = {"cedula", "nombre", "apellido", "direccion", "telefono"};
-            String registros[] = new String[5];
+            String titulos[] = {"Cedula", "Nombre", "Apellido", "Genero", "Direccion", "Telefono"};
+            String registros[] = new String[6];
             modelo.setColumnIdentifiers(titulos);
             String SqlSelect = "select * from estudiantes";
             Statement psd = cc.createStatement();
@@ -202,13 +282,13 @@ public class Alumnos extends javax.swing.JInternalFrame {
                 registros[0] = rs.getString(1);
                 registros[1] = rs.getString(2);
                 registros[2] = rs.getString(3);
-                registros[3] = rs.getString(4);
-                registros[4] = rs.getString(5);
+                registros[3] = rs.getString(6).equals("M") ? "Masculino" : "Femenino";
+                registros[4] = rs.getString(4);
+                registros[5] = rs.getString(5);
                 modelo.addRow(registros);
             }
             jtblAlumnos.setModel(modelo);
 
-            // === FILTRO DINÁMICO === (reconectar sorter al nuevo modelo)
             if (sorter == null) {
                 sorter = new TableRowSorter<>(jtblAlumnos.getModel());
                 jtblAlumnos.setRowSorter(sorter);
@@ -225,24 +305,35 @@ public class Alumnos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-     private void setupFiltering() {
+
+    private void setupFiltering() {
         // Conectar sorter si aún no existe
         if (jtblAlumnos.getModel() != null && sorter == null) {
             sorter = new TableRowSorter<>(jtblAlumnos.getModel());
             jtblAlumnos.setRowSorter(sorter);
         }
-          filterTextField.getDocument().addDocumentListener(new DocumentListener() {
+        filterTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) { applyFilter(filterTextField.getText()); }
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter(filterTextField.getText());
+            }
+
             @Override
-            public void removeUpdate(DocumentEvent e) { applyFilter(filterTextField.getText()); }
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter(filterTextField.getText());
+            }
+
             @Override
-            public void changedUpdate(DocumentEvent e) { applyFilter(filterTextField.getText()); }
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter(filterTextField.getText());
+            }
         });
     }
-        
+
     private void applyFilter(String text) {
-        if (sorter == null) return;
+        if (sorter == null) {
+            return;
+        }
 
         if (text == null || text.trim().isEmpty()) {
             sorter.setRowFilter(null); // sin filtro
@@ -254,18 +345,19 @@ public class Alumnos extends javax.swing.JInternalFrame {
             String pattern = "(?i)" + Pattern.quote(text.trim());
 
             // Construir OR sobre todas las columnas visibles (0..columnCount-1)
-            List<RowFilter<Object,Object>> filters = new ArrayList<>();
+            List<RowFilter<Object, Object>> filters = new ArrayList<>();
             int cols = jtblAlumnos.getModel().getColumnCount();
             for (int c = 0; c < cols; c++) {
                 filters.add(RowFilter.regexFilter(pattern, c));
             }
-            RowFilter<Object,Object> orFilter = RowFilter.orFilter(filters);
+            RowFilter<Object, Object> orFilter = RowFilter.orFilter(filters);
             sorter.setRowFilter(orFilter);
         } catch (PatternSyntaxException ex) {
             // Si el patrón es inválido, no romper: quitar filtro o mostrar aviso suave
             sorter.setRowFilter(null);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -286,6 +378,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
         jtxtDireccion = new componentes.UTCDireccion();
         jtxtNombre = new componentes.UTCNombre();
         jtxtApellido = new componentes.UTCNombre();
+        jcbxGenero = new componentes.UTCComboGenero();
+        jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jbntNuevo = new javax.swing.JButton();
@@ -313,6 +407,8 @@ public class Alumnos extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Telefono");
 
+        jLabel7.setText("Genero");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -321,45 +417,52 @@ public class Alumnos extends javax.swing.JInternalFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(24, 24, 24)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))))
+                .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtxtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(jtxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtxtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtxtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(126, Short.MAX_VALUE))
+                    .addComponent(jtxtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcbxGenero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel1))
-                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -507,16 +610,16 @@ public class Alumnos extends javax.swing.JInternalFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -551,7 +654,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private void filterTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterTextFieldActionPerformed
         // TODO add your handling code here:
 
-                applyFilter(filterTextField.getText());
+        applyFilter(filterTextField.getText());
 
 
     }//GEN-LAST:event_filterTextFieldActionPerformed
@@ -599,6 +702,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -609,6 +713,7 @@ public class Alumnos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbntEliminar;
     private javax.swing.JButton jbntGuardar;
     private javax.swing.JButton jbntNuevo;
+    private componentes.UTCComboGenero jcbxGenero;
     private javax.swing.JTable jtblAlumnos;
     private componentes.UTCNombre jtxtApellido;
     private componentes.UTCcedula jtxtCedula;

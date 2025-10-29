@@ -38,6 +38,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         cargarEstudiantesEnLista();
         cargarCursosEnCombo();
         setupStudentSelectionHandler();
+        setupCourseSelectionHandler();
         try {
             cc.setAutoCommit(true);
         } catch (SQLException ignore) {
@@ -46,8 +47,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
     private void botonesInicio() {
         jbtnNuevi.setEnabled(true);
-        jbtnGuardar.setEnabled(false);
-        jbtnEditar.setEnabled(false);
+        jbtnAgregar.setEnabled(false);
         jbtnEliminar.setEnabled(false);
         jbtnCancelar.setEnabled(true);
         JlstEstudiantes.setEnabled(false);
@@ -57,8 +57,8 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
     private void botonesNuevo() {
         jbtnNuevi.setEnabled(false);
-        jbtnGuardar.setEnabled(false);
-        jbtnEditar.setEnabled(false);
+        
+        jbtnAgregar.setEnabled(false);
         jbtnEliminar.setEnabled(false);
         jbtnCancelar.setEnabled(true);
         JlstEstudiantes.setEnabled(true);
@@ -83,17 +83,17 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jbtnNuevi = new javax.swing.JButton();
-        jbtnGuardar = new javax.swing.JButton();
-        jbtnEditar = new javax.swing.JButton();
+        jbtnAgregar = new javax.swing.JButton();
         jbtnEliminar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jtxtEstudiante = new javax.swing.JTextField();
-        jtxtCurso = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jLstCursos = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -127,7 +127,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -136,32 +136,44 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jbtnNuevi.setText("Nuevo");
-        jbtnNuevi.addActionListener(evt -> jbtnNueviActionPerformed(evt));
+        jbtnNuevi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnNueviActionPerformed(evt);
+            }
+        });
 
-        jbtnGuardar.setText("Guardar");
-        jbtnGuardar.addActionListener(evt -> jbtnGuardarActionPerformed(evt));
-
-        jbtnEditar.setText("Editar");
-        jbtnEditar.addActionListener(evt -> jbtnEditarActionPerformed(evt));
+        jbtnAgregar.setText("Agregar");
+        jbtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAgregarActionPerformed(evt);
+            }
+        });
 
         jbtnEliminar.setText("Eliminar");
-        jbtnEliminar.addActionListener(evt -> jbtnEliminarActionPerformed(evt));
+        jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEliminarActionPerformed(evt);
+            }
+        });
 
         jbtnCancelar.setText("Cancelar");
-        jbtnCancelar.addActionListener(evt -> jbtnCancelarActionPerformed(evt));
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnNuevi, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnGuardar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnEditar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnEliminar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnCancelar, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jbtnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnNuevi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -170,14 +182,12 @@ public class Inscripciones extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jbtnNuevi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnEditar)
+                .addComponent(jbtnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnCancelar)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -188,7 +198,7 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
         jtxtEstudiante.setEditable(false);
 
-        jtxtCurso.setEditable(false);
+        jScrollPane2.setViewportView(jLstCursos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -201,9 +211,11 @@ public class Inscripciones extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jtxtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,9 +225,9 @@ public class Inscripciones extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,12 +238,12 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,6 +271,14 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         botonesInicio();
         this.setVisible(false);
     }//GEN-LAST:event_jbtnCancelarActionPerformed
+
+    private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
+        agregarInscripcion();
+    }//GEN-LAST:event_jbtnAgregarActionPerformed
+
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+        eliminarInscripcion();
+    }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,9 +358,9 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             String selected = JlstEstudiantes.getSelectedValue();
             if (selected == null || selected.isBlank()) {
                 jtxtEstudiante.setText("");
-                jtxtCurso.setText("");
-                jbtnGuardar.setEnabled(false);
-                jbtnEditar.setEnabled(false);
+                // limpiar lista de cursos cuando no hay estudiante seleccionado
+                jLstCursos.setModel(new DefaultListModel<>());
+                jbtnAgregar.setEnabled(false);
                 jbtnEliminar.setEnabled(false);
                 return;
             }
@@ -350,19 +370,23 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             if (sep > -1) {
                 idEst = selected.substring(0, sep).trim();
             }
-
-            String curso = obtenerCursoPorEstudiante(idEst);
-            jtxtCurso.setText(curso == null ? "" : curso);
-            boolean tieneCurso = (curso != null && !curso.isBlank());
+            cargarCursosDeEstudianteEnLista(idEst);
             if (!accionesHabilitadas) {
-                jbtnGuardar.setEnabled(false);
-                jbtnEditar.setEnabled(false);
+                jbtnAgregar.setEnabled(false);
                 jbtnEliminar.setEnabled(false);
             } else {
-                jbtnGuardar.setEnabled(!tieneCurso);
-                jbtnEditar.setEnabled(tieneCurso);
-                jbtnEliminar.setEnabled(tieneCurso);
+                // Con alumno seleccionado: permitir Agregar; Eliminar solo al seleccionar un curso
+                jbtnAgregar.setEnabled(true);
+                jbtnEliminar.setEnabled(false);
             }
+        });
+    }
+
+    private void setupCourseSelectionHandler() {
+        jLstCursos.addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+            boolean hayCurso = jLstCursos.getSelectedValue() != null;
+            jbtnEliminar.setEnabled(accionesHabilitadas && hayCurso);
         });
     }
 
@@ -381,6 +405,22 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             logger.log(Level.SEVERE, "Error al obtener curso por estudiante", ex);
         }
         return null;
+    }
+
+    private void cargarCursosDeEstudianteEnLista(String idEst) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        String sql = "SELECT c.nom_cur FROM cursos c JOIN inscripciones i ON c.id_cur = i.id_cur_ins WHERE i.id_est_ins = ? ORDER BY c.nom_cur";
+        try (PreparedStatement ps = cc.prepareStatement(sql)) {
+            ps.setString(1, idEst);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    modelo.addElement(rs.getString(1));
+                }
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Error al cargar cursos del alumno", ex);
+        }
+        jLstCursos.setModel(modelo);
     }
 
     private String obtenerEstudianteIdSeleccionado() {
@@ -415,10 +455,11 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         return null;
     }
 
-    private void desasignarCursosDeEstudiante(String idEst) throws SQLException {
-        String sql = "DELETE FROM inscripciones WHERE id_est_ins= ?";
+    private void desasignarCursoEspecifico(String idEst, String idCur) throws SQLException {
+        String sql = "DELETE FROM inscripciones WHERE id_est_ins = ? AND id_cur_ins = ?";
         try (PreparedStatement ps = cc.prepareStatement(sql)) {
             ps.setString(1, idEst);
+            ps.setString(2, idCur);
             ps.executeUpdate();
         }
     }
@@ -441,7 +482,21 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         }
     }
     
-    private void guardarInscripcion(){
+    private boolean existeInscripcion(String idEst, String idCur) {
+        String sql = "SELECT 1 FROM inscripciones WHERE id_est_ins = ? AND id_cur_ins = ? LIMIT 1";
+        try (PreparedStatement ps = cc.prepareStatement(sql)) {
+            ps.setString(1, idEst);
+            ps.setString(2, idCur);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Error al verificar inscripción existente", ex);
+            return false;
+        }
+    }
+
+    private void agregarInscripcion(){
         if (!accionesHabilitadas) {
             return;
         }
@@ -464,10 +519,8 @@ public class Inscripciones extends javax.swing.JInternalFrame {
         }
 
         try {
-            String cursoActual = obtenerCursoPorEstudiante(idEst);
-            if (cursoActual != null && !cursoActual.isBlank()) {
-                JOptionPane.showMessageDialog(this, "El estudiante ya tiene un curso. Use Editar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                setupStudentSelectionHandler();
+            if (existeInscripcion(idEst, idCur)) {
+                JOptionPane.showMessageDialog(this, "El estudiante ya está inscrito en ese curso.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -475,72 +528,17 @@ public class Inscripciones extends javax.swing.JInternalFrame {
 
             if (updated > 0) {
                 logger.log(Level.INFO, "Asignación realizada - curso: {0}, estudiante: {1}", new Object[]{idCur, idEst});
-                JOptionPane.showMessageDialog(this, "Asignado correctamente.", "Asignación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Curso agregado correctamente.", "Asignación", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo asignar el curso.", "Sin cambios", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se pudo agregar el curso.", "Sin cambios", JOptionPane.WARNING_MESSAGE);
             }
-
-            String curso = obtenerCursoPorEstudiante(idEst);
-            jtxtCurso.setText(curso == null ? "" : curso);
-            boolean tieneCurso = (curso != null && !curso.isBlank());
-            jbtnGuardar.setEnabled(accionesHabilitadas && !tieneCurso);
-            jbtnEditar.setEnabled(accionesHabilitadas && tieneCurso);
-            jbtnEliminar.setEnabled(accionesHabilitadas && tieneCurso);
+            cargarCursosDeEstudianteEnLista(idEst);
+            // Tras agregar: permitir seguir agregando; eliminar queda a la espera de selección
+            jbtnAgregar.setEnabled(true);
+            jbtnEliminar.setEnabled(false);
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Error al guardar asignación", ex);
-            JOptionPane.showMessageDialog(this, "Error al asignar curso", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    private void editarinscripcion(){
-        if (!accionesHabilitadas) {
-            return;
-        }
-        String idEst = obtenerEstudianteIdSeleccionado();
-        String idCur = obtenerCursoIdSeleccionado();
-
-        if (idCur == null) {
-            Object sel = jComboBox1.getSelectedItem();
-            if (sel != null) {
-                idCur = obtenerCursoIdPorNombre(sel.toString());
-            }
-        }
-        if (idEst == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un estudiante", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (idCur == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un nuevo curso", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        try {
-            String cursoActualNombre = obtenerCursoPorEstudiante(idEst);
-            String cursoNuevoNombre = jComboBox1.getSelectedItem().toString();
-
-            if (cursoActualNombre != null && cursoActualNombre.equals(cursoNuevoNombre)) {
-                JOptionPane.showMessageDialog(this, "El estudiante ya está inscrito en este curso.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
-            int updated = asignarCursoAEstudianteForzado(idCur, idEst);
-
-            if (updated > 0) {
-                logger.log(Level.INFO, "Edición realizada - curso: {0}, estudiante: {1}", new Object[]{idCur, idEst});
-                JOptionPane.showMessageDialog(this, "Cambio realizado.", "Edición", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo cambiar el curso. (El estudiante no tenía inscripción previa)", "Sin cambios", JOptionPane.WARNING_MESSAGE);
-            }
-
-            String curso = obtenerCursoPorEstudiante(idEst);
-            jtxtCurso.setText(curso == null ? "" : curso);
-            boolean tieneCurso = (curso != null && !curso.isBlank());
-            jbtnGuardar.setEnabled(accionesHabilitadas && !tieneCurso);
-            jbtnEditar.setEnabled(accionesHabilitadas && tieneCurso);
-            jbtnEliminar.setEnabled(accionesHabilitadas && tieneCurso);
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Error al editar asignación", ex);
-            JOptionPane.showMessageDialog(this, "Error al cambiar curso", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al agregar curso", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -549,50 +547,40 @@ public class Inscripciones extends javax.swing.JInternalFrame {
             return;
         }
         String idEst = obtenerEstudianteIdSeleccionado();
+        String cursoNombre = jLstCursos.getSelectedValue();
         if (idEst == null) {
             JOptionPane.showMessageDialog(this, "Seleccione un estudiante", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if (cursoNombre == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso en la lista", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         try {
-            String cursoActual = obtenerCursoPorEstudiante(idEst);
-            if (cursoActual == null || cursoActual.isBlank()) {
-                JOptionPane.showMessageDialog(this, "El estudiante no tiene curso asignado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                jbtnGuardar.setEnabled(true);
-                jbtnEditar.setEnabled(false);
-                jbtnEliminar.setEnabled(false);
+            String idCur = obtenerCursoIdPorNombre(cursoNombre);
+            if (idCur == null) {
+                JOptionPane.showMessageDialog(this, "No se pudo identificar el curso seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la inscripción de este estudiante?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar el curso '" + cursoNombre + "' del alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (confirm != JOptionPane.YES_OPTION) {
                 return;
             }
 
-            desasignarCursosDeEstudiante(idEst);
-            JOptionPane.showMessageDialog(this, "Inscripción eliminada.", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+            desasignarCursoEspecifico(idEst, idCur);
+            JOptionPane.showMessageDialog(this, "Curso eliminado.", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
 
-            jtxtCurso.setText("");
-            jbtnGuardar.setEnabled(accionesHabilitadas);
-            jbtnEditar.setEnabled(false);
+            cargarCursosDeEstudianteEnLista(idEst);
+            jbtnAgregar.setEnabled(true);
             jbtnEliminar.setEnabled(false);
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Error al eliminar asignación", ex);
             JOptionPane.showMessageDialog(this, "Error al eliminar relación", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-        guardarInscripcion();
-    }
-
-    private void jbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {
-        editarinscripcion();
-    }
-
-    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {
-        eliminarInscripcion();
-    }
+                                                                                                                            
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JlstEstudiantes;
@@ -601,16 +589,16 @@ public class Inscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JList<String> jLstCursos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbtnAgregar;
     private javax.swing.JButton jbtnCancelar;
-    private javax.swing.JButton jbtnEditar;
     private javax.swing.JButton jbtnEliminar;
-    private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnNuevi;
-    private javax.swing.JTextField jtxtCurso;
     private javax.swing.JTextField jtxtEstudiante;
     // End of variables declaration//GEN-END:variables
 }
