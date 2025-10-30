@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package interfaces;
 
-/**
- *
- * @author Anthony
- */
+
 public class Punina {
-    
+    //Prueba de escritura en la clase Punina por Maria Zapata
 }
