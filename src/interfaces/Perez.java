@@ -6,8 +6,8 @@ package interfaces;
 
 /**
  *
- * @author THINKPAD
+ * @author ENV TECH
  */
-public class Quitto {
- //Este es el Texto de Maia Rojas
+public class Perez {
+    
 }
