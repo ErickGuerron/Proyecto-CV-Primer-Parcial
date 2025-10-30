@@ -6,8 +6,8 @@ package interfaces;
 
 /**
  *
- * @author THINKPAD
+ * @author maya2
  */
-public class Quitto {
- //Este es el Texto de Maia Rojas
+public class Rojas {
+    
 }
