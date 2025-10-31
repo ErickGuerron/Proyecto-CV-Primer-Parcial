@@ -35,7 +35,9 @@ public class ReporteXEstudiante extends javax.swing.JInternalFrame {
         configurarListenerCedula();
     }
     
-     public ReporteXEstudiante(JDesktopPane jdskPane) {
+    //Probando git push
+    
+    public ReporteXEstudiante(JDesktopPane jdskPane) {
         initComponents();
         jbtnReporte.setEnabled(false);
         this.jdskPane=jdskPane;
